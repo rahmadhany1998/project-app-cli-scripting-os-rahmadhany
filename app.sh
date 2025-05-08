@@ -34,15 +34,6 @@ add_income() {
             income_desc+=($desc) # Menambahkan deskripsi pendapatan ke dalam array descriptions
 
             echo "Pendapatan berhasil ditambahkan."
-
-            #Menampilkan semua pendapatan yang ada dan menghitung total pendapatan
-            for ((i = 0; i < ${#income[@]}; i++)); do
-                echo "Pendapatan: ${income[$i]} - Deskripsi: ${income_desc[$i]}"
-                total_income=$((total_income + income[$i])) # Menjumlahkan total pendapatan
-            done
-
-            # Menampilkan hasil pendapatan
-            echo "Total Pendapatan: $total_income"
             break # Keluar dari perulangan jika input valid
         else
             echo "Silakan coba lagi."
@@ -52,7 +43,6 @@ add_income() {
 
 # Fungsi untuk menambahkan expense (pengeluaran)
 add_expense() {
-    total_expense=0
     while true; do
         # Minta pengguna untuk memasukkan jumlah pengeluaran
         echo "Masukkan jumlah pengeluaran: "
@@ -68,15 +58,6 @@ add_expense() {
             expense_desc+=($desc) # Menambahkan deskripsi pengeluaran ke dalam array descriptions
 
             echo "Pengeluaran berhasil ditambahkan."
-
-            # Menampilkan semua pengeluaran yang ada dan menghitung total pengeluaran
-            for ((i = 0; i < ${#expense[@]}; i++)); do
-                echo "Pengeluaran: ${expense[$i]} - Deskripsi: ${expense_desc[$i]}"
-                total_expense=$((total_expense + expense[$i])) # Menjumlahkan total pengeluaran
-            done
-
-            # Menampilkan hasil pengeluaran
-            echo "Total Pengeluaran: $total_expense"
             break # Keluar dari perulangan jika input valid
         else
             echo "Silakan coba lagi."
@@ -84,7 +65,46 @@ add_expense() {
     done
 }
 
+# Fungsi untuk menampilkan laporan pendapatan dan pengeluaran
+show_report() {
+    # Variabel untuk menyimpan total pendapatan, pengeluaran, dan saldo bersih
+    total_income=0
+    total_expense=0
+    net_balance=0
+
+    # Menampilkan header laporan
+    echo "Laporan Pendapatan dan Pengeluaran:"
+    echo "-----------------------------------"
+
+    # Menampilkan semua pendapatan yang ada dan menghitung total pendapatan
+    for ((i=0; i<${#income[@]}; i++)); do
+        echo "Pendapatan: ${income[$i]} - Deskripsi: ${income_desc[$i]}"
+        total_income=$((total_income + income[$i]))  # Menjumlahkan total pendapatan
+    done
+
+    # Menampilkan semua pengeluaran yang ada dan menghitung total pengeluaran
+    for ((i=0; i<${#expense[@]}; i++)); do
+        echo "Pengeluaran: ${expense[$i]} - Deskripsi: ${expense_desc[$i]}"
+        total_expense=$((total_expense + expense[$i]))  # Menjumlahkan total pengeluaran
+    done
+
+    # Menghitung saldo bersih (net balance) = total pendapatan - total pengeluaran
+    net_balance=$((total_income - total_expense))
+
+    # Menampilkan hasil perhitungan saldo
+    echo "-----------------------------------"
+    echo "Total Pendapatan: $total_income"
+    echo "Total Pengeluaran: $total_expense"
+    echo "Saldo Bersih: $net_balance"
+
+    # Penanganan jika saldo bersih negatif
+    if (( net_balance < 0 )); then
+        echo "Peringatan: Saldo bersih Anda NEGATIF!"
+    fi
+}
+
 while true; do
     add_income
     add_expense
+    show_report
 done
