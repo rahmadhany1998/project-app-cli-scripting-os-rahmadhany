@@ -26,7 +26,6 @@ validate_number() {
 
 # Fungsi untuk menambahkan income (pendapatan)
 add_income() {
-    total_income=0
     while true; do
         # Minta pengguna untuk memasukkan jumlah pendapatan
         echo -e "${GREEN}Masukkan jumlah pendapatan: ${ENDCOLOR}"
