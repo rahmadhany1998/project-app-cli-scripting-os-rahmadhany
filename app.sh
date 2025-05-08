@@ -77,15 +77,15 @@ show_report() {
     echo "-----------------------------------"
 
     # Menampilkan semua pendapatan yang ada dan menghitung total pendapatan
-    for ((i=0; i<${#income[@]}; i++)); do
+    for ((i = 0; i < ${#income[@]}; i++)); do
         echo "Pendapatan: ${income[$i]} - Deskripsi: ${income_desc[$i]}"
-        total_income=$((total_income + income[$i]))  # Menjumlahkan total pendapatan
+        total_income=$((total_income + income[$i])) # Menjumlahkan total pendapatan
     done
 
     # Menampilkan semua pengeluaran yang ada dan menghitung total pengeluaran
-    for ((i=0; i<${#expense[@]}; i++)); do
+    for ((i = 0; i < ${#expense[@]}; i++)); do
         echo "Pengeluaran: ${expense[$i]} - Deskripsi: ${expense_desc[$i]}"
-        total_expense=$((total_expense + expense[$i]))  # Menjumlahkan total pengeluaran
+        total_expense=$((total_expense + expense[$i])) # Menjumlahkan total pengeluaran
     done
 
     # Menghitung saldo bersih (net balance) = total pendapatan - total pengeluaran
@@ -98,13 +98,46 @@ show_report() {
     echo "Saldo Bersih: $net_balance"
 
     # Penanganan jika saldo bersih negatif
-    if (( net_balance < 0 )); then
+    if ((net_balance < 0)); then
         echo "Peringatan: Saldo bersih Anda NEGATIF!"
     fi
 }
 
-while true; do
-    add_income
-    add_expense
-    show_report
-done
+# Fungsi utama untuk menampilkan menu dan mengatur alur aplikasi
+main() {
+    # Perulangan untuk menampilkan menu utama terus menerus
+    while true; do
+        # Menampilkan menu pilihan kepada pengguna
+        echo "Selamat datang di Income & Expense Manager!"
+        echo "1. Tambah Pendapatan"
+        echo "2. Tambah Pengeluaran"
+        echo "3. Tampilkan Laporan"
+        echo "4. Keluar"
+        echo -n "Pilih menu (1/2/3/4): "
+        read choice # Membaca pilihan menu dari pengguna
+
+        # Percabangan menggunakan 'case' untuk menangani pilihan menu pengguna
+        case $choice in
+        1)
+            add_income # Panggil fungsi untuk menambahkan pendapatan
+            ;;
+        2)
+            add_expense # Panggil fungsi untuk menambahkan pengeluaran
+            ;;
+        3)
+            show_report # Panggil fungsi untuk menampilkan laporan
+            ;;
+        4)
+            echo "Terima kasih telah menggunakan aplikasi ini." # Menampilkan pesan keluar
+            exit 0                                              # Keluar dari program
+            ;;
+        *)
+            echo "Pilihan tidak valid. Silakan coba lagi." # Menangani input yang tidak valid
+            ;;
+        esac
+        echo "" # Baris kosong untuk pemisah
+    done
+}
+
+# Memanggil fungsi utama untuk memulai aplikasi
+main
