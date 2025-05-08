@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Mendeklarasikan array untuk menyimpan data pendapatan (income), pengeluaran (expense), dan deskripsi (descriptions)
+# Mendeklarasikan array untuk menyimpan data pendapatan (income), pengeluaran (expense), deskripsi pendapatan (income_desc) dan deskripsi pengeluaran (expense_desc)
 declare -a income
 declare -a expense
-declare -a descriptions
+declare -a income_desc
+declare -a expense_desc
 
 # Fungsi untuk memvalidasi input apakah itu angka
 validate_number() {
@@ -30,13 +31,13 @@ add_income() {
             # Minta pengguna untuk memasukkan deskripsi pendapatan
             echo "Masukkan deskripsi pendapatan: "
             read desc
-            descriptions+=($desc) # Menambahkan deskripsi pendapatan ke dalam array descriptions
+            income_desc+=($desc) # Menambahkan deskripsi pendapatan ke dalam array descriptions
 
             echo "Pendapatan berhasil ditambahkan."
 
             #Menampilkan semua pendapatan yang ada dan menghitung total pendapatan
             for ((i = 0; i < ${#income[@]}; i++)); do
-                echo "Pendapatan: ${income[$i]} - Deskripsi: ${descriptions[$i]}"
+                echo "Pendapatan: ${income[$i]} - Deskripsi: ${income_desc[$i]}"
                 total_income=$((total_income + income[$i])) # Menjumlahkan total pendapatan
             done
 
@@ -64,13 +65,13 @@ add_expense() {
             # Minta pengguna untuk memasukkan deskripsi pengeluaran
             echo "Masukkan deskripsi pengeluaran: "
             read desc
-            descriptions+=($desc) # Menambahkan deskripsi pengeluaran ke dalam array descriptions
+            expense_desc+=($desc) # Menambahkan deskripsi pengeluaran ke dalam array descriptions
 
             echo "Pengeluaran berhasil ditambahkan."
 
             # Menampilkan semua pengeluaran yang ada dan menghitung total pengeluaran
             for ((i = 0; i < ${#expense[@]}; i++)); do
-                echo "Pengeluaran: ${expense[$i]} - Deskripsi: ${descriptions[$i + ${#income[@]}]}"
+                echo "Pengeluaran: ${expense[$i]} - Deskripsi: ${expense_desc[$i]}"
                 total_expense=$((total_expense + expense[$i])) # Menjumlahkan total pengeluaran
             done
 
