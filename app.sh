@@ -22,6 +22,8 @@ add_income() {
         echo "Pendapatan: ${income[$i]} - Deskripsi: ${descriptions[$i]}"
         total_income=$((total_income + income[$i])) # Menjumlahkan total pendapatan
     done
+    # Menampilkan hasil pendapatan
+    echo "Total Pendapatan: $total_income"
 }
 
 while true; do
