@@ -15,7 +15,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd project-app-cli-scripting-os-rahmadhany
 ```
 
 Change file permission
